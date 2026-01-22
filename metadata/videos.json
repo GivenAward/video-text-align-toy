@@ -1,0 +1,72 @@
+[
+  {
+    "video_id": "yt_01",
+    "url": "https://www.youtube.com/watch?v=2Jhb-gw4gc0",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_02",
+    "url": "https://www.youtube.com/watch?v=BnMi5E8JST4",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_03",
+    "url": "https://www.youtube.com/watch?v=sAANWsuweH8",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_04",
+    "url": "https://www.youtube.com/watch?v=2DnGKEeRB4g",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_05",
+    "url": "https://www.youtube.com/watch?v=46JjKTu0LFo",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_06",
+    "url": "https://www.youtube.com/watch?v=bP-YBJDWPBs",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_07",
+    "url": "https://www.youtube.com/watch?v=s8xCwHa0tuE",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_08",
+    "url": "https://www.youtube.com/watch?v=sxxnqc1mu08",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_09",
+    "url": "https://www.youtube.com/watch?v=1fGKbyJOQ3o",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  },
+  {
+    "video_id": "yt_10",
+    "url": "https://www.youtube.com/watch?v=ceV_Lm2e170",
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "has_captions": false
+  }
+]

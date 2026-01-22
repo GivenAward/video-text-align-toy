@@ -36,3 +36,70 @@ Video–Text Alignment
 Filtering & Quality Control
       ↓
 Final Dataset (clip.mp4, caption)
+```
+```
+video-text-align-toy
+├─ .python-version
+├─ .venv
+│  ├─ CACHEDIR.TAG
+│  ├─ Lib
+│  │  └─ site-packages
+│  │     ├─ _virtualenv.pth
+│  │     ├─ _virtualenv.py
+│  │     └─ __pycache__
+│  │        └─ _virtualenv.cpython-311.pyc
+│  ├─ pyvenv.cfg
+│  └─ Scripts
+│     ├─ activate
+│     ├─ activate.bat
+│     ├─ activate.csh
+│     ├─ activate.fish
+│     ├─ activate.nu
+│     ├─ activate.ps1
+│     ├─ activate_this.py
+│     ├─ deactivate.bat
+│     ├─ pydoc.bat
+│     ├─ python.exe
+│     └─ pythonw.exe
+├─ configs
+│  └─ pipeline.json
+├─ data
+│  ├─ alignments
+│  │  ├─ candidates
+│  │  │  └─ alignments.jsonl
+│  │  └─ filtered
+│  │     └─ alignments.jsonl
+│  ├─ audio
+│  ├─ clips
+│  │  └─ sentences
+│  ├─ dataset
+│  │  ├─ train
+│  │  ├─ train.jsonl
+│  │  ├─ val
+│  │  └─ val.jsonl
+│  ├─ raw_videos
+│  └─ transcripts
+│     ├─ clean_text
+│     └─ whisper_raw
+│        └─ yt_01.json
+├─ docs
+├─ logs
+│  ├─ pipeline
+│  └─ qc
+├─ main.py
+├─ metadata
+│  └─ videos.json
+├─ notebooks
+├─ pyproject.toml
+├─ README.md
+└─ scripts
+   ├─ align
+   ├─ download
+   │  └─ download_videos.py
+   ├─ pipeline.py
+   ├─ process
+   ├─ qc
+   └─ __pycache__
+      └─ pipeline.cpython-311.pyc
+
+```

@@ -1,0 +1,39 @@
+{
+  "paths": {
+    "videos_meta": "metadata/videos.json",
+    "raw_videos_dir": "data/raw_videos",
+    "audio_dir": "data/audio",
+    "transcripts_dir": "data/transcripts/whisper_raw",
+    "clips_dir": "data/clips/sentences",
+    "align_candidates_dir": "data/alignments/candidates",
+    "align_filtered_dir": "data/alignments/filtered",
+    "dataset_dir": "data/dataset",
+    "logs_dir": "logs/pipeline"
+  },
+  "selection": {
+    "single_speaker": true,
+    "minimal_scene_cuts": true,
+    "no_captions": true
+  },
+  "clip": {
+    "min_seconds": 3.0,
+    "max_seconds": 7.0
+  },
+  "text_filter": {
+    "min_chars": 5,
+    "dedupe": true
+  },
+  "video_filter": {
+    "black_frame_threshold": 0.1,
+    "static_var_threshold": 0.001,
+    "motion_var_threshold": 100.0
+  },
+  "clip_filter": {
+    "enabled": false,
+    "score_threshold": 0.25
+  },
+  "split": {
+    "train_ratio": 0.9
+  },
+  "execute": true
+}
