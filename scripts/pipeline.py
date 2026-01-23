@@ -6,7 +6,7 @@ import re
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, List
+from typing import Dict, Iterable, List, Optional
 
 
 FILLER_WORDS = {
@@ -66,6 +66,10 @@ class PipelineConfig:
     clip_score_threshold: float
     train_ratio: float
     execute: bool
+    whisper_model: str
+    whisper_language: Optional[str]
+    whisper_task: str
+    whisper_verbose: Optional[bool]
 
     @classmethod
     def load(cls, path: Path) -> "PipelineConfig":
@@ -78,6 +82,7 @@ class PipelineConfig:
         video = cfg.get("video_filter", {})
         clip_filter = cfg.get("clip_filter", {})
         split = cfg.get("split", {})
+        whisper_cfg = cfg.get("whisper", {})
         return cls(
             repo_root=root,
             videos_meta=Path(paths.get("videos_meta", "metadata/videos.json")),
@@ -103,6 +108,10 @@ class PipelineConfig:
             clip_score_threshold=float(clip_filter.get("score_threshold", 0.25)),
             train_ratio=float(split.get("train_ratio", 0.9)),
             execute=bool(cfg.get("execute", False)),
+            whisper_model=str(whisper_cfg.get("model", "base")),
+            whisper_language=whisper_cfg.get("language"),
+            whisper_task=str(whisper_cfg.get("task", "transcribe")),
+            whisper_verbose=whisper_cfg.get("verbose", True),
         )
 
 
@@ -158,23 +167,28 @@ def transcribe_whisper(cfg: PipelineConfig, audio_paths: Dict[str, Path], execut
     # Step 3: Whisper ASR with timestamps.
     transcript_paths = {}
     cfg.transcripts_dir.mkdir(parents=True, exist_ok=True)
+    if execute:
+        try:
+            import whisper
+        except ImportError as exc:
+            raise SystemExit("whisper package is required for execute mode.") from exc
+
+        model = whisper.load_model(cfg.whisper_model)
     for vid, audio_path in audio_paths.items():
         out_path = cfg.transcripts_dir / f"{vid}.json"
         transcript_paths[vid] = out_path
         if out_path.exists():
             continue
         if execute:
-            cmd = [
-                "whisper",
-                str(audio_path),
-                "--model",
-                "base",
-                "--output_format",
-                "json",
-                "--output_dir",
-                str(cfg.transcripts_dir),
-            ]
-            run(cmd, execute)
+            kwargs = {}
+            if cfg.whisper_language:
+                kwargs["language"] = cfg.whisper_language
+            if cfg.whisper_task:
+                kwargs["task"] = cfg.whisper_task
+            if cfg.whisper_verbose is not None:
+                kwargs["verbose"] = cfg.whisper_verbose
+            result = model.transcribe(str(audio_path), **kwargs)
+            save_json(out_path, result)
         else:
             placeholder = [
                 {
@@ -192,6 +206,8 @@ def segment_clips(cfg: PipelineConfig, transcripts: Dict[str, Path], execute: bo
     all_segments: Dict[str, List[dict]] = {}
     for vid, t_path in transcripts.items():
         segments = load_json(t_path, [])
+        if isinstance(segments, dict):
+            segments = segments.get("segments", [])
         filtered = []
         for idx, seg in enumerate(segments):
             start = float(seg.get("start", 0))
@@ -257,20 +273,12 @@ def align_segments(cfg: PipelineConfig, segments: Dict[str, List[dict]]) -> List
 
 def clean_text(text: str) -> str:
     t = text.strip().lower()
-    t = re.sub(r"[^\w\s']", " ", t)
-    t = re.sub(r"\s+", " ", t).strip()
+    t = re.sub(r"[^\w\s']", " ", t)  # Remove special characters to " "
+    t = re.sub(r"\s+", " ", t).strip()  # Remove at least 2 spaces to " "
     for w in FILLER_WORDS:
-        t = re.sub(rf"\b{re.escape(w)}\b", "", t)
-    t = re.sub(r"\s+", " ", t).strip()
-    return t
-
-
-def filter_text(cfg: PipelineConfig, rows: List[dict]) -> List[dict]:
-    # Step 6 (text): remove short, filler-only, or duplicate captions.
-    seen = set()
-    filtered = []
-    for row in rows:
-        cleaned = clean_text(row["caption"])
+        t = re.sub(rf"\b{re.escape(w)}\b", "", t)  # Remove 'w' to ""
+"", t)
+(row["caption"])
         if len(cleaned) < cfg.text_min_chars:
             continue
         if cfg.filter_dedupe:

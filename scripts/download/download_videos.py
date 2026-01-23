@@ -97,9 +97,7 @@ def load_videos(path: Path) -> List[Dict]:
 def main() -> int:
     repo_root = Path(__file__).resolve().parents[2]
 
-    parser = argparse.ArgumentParser(
-        description="Download videos listed in metadata/videos.json."
-    )
+    parser = argparse.ArgumentParser(description="Download videos listed in metadata/videos.json.")
     parser.add_argument(
         "--config",
         help="Optional pipeline config (JSON) to resolve paths.",
@@ -155,9 +153,7 @@ def main() -> int:
     config_path = Path(args.config) if args.config else None
     videos_path = Path(args.videos) if args.videos else None
     output_dir = Path(args.output_dir) if args.output_dir else None
-    videos_path, output_dir = resolve_paths(
-        repo_root, config_path, videos_path, output_dir
-    )
+    videos_path, output_dir = resolve_paths(repo_root, config_path, videos_path, output_dir)
 
     output_dir.mkdir(parents=True, exist_ok=True)
     downloader = find_downloader(args.downloader)
