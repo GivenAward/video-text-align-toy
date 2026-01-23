@@ -37,69 +37,53 @@ Filtering & Quality Control
       ↓
 Final Dataset (clip.mp4, caption)
 ```
-```
-video-text-align-toy
-├─ .python-version
-├─ .venv
-│  ├─ CACHEDIR.TAG
-│  ├─ Lib
-│  │  └─ site-packages
-│  │     ├─ _virtualenv.pth
-│  │     ├─ _virtualenv.py
-│  │     └─ __pycache__
-│  │        └─ _virtualenv.cpython-311.pyc
-│  ├─ pyvenv.cfg
-│  └─ Scripts
-│     ├─ activate
-│     ├─ activate.bat
-│     ├─ activate.csh
-│     ├─ activate.fish
-│     ├─ activate.nu
-│     ├─ activate.ps1
-│     ├─ activate_this.py
-│     ├─ deactivate.bat
-│     ├─ pydoc.bat
-│     ├─ python.exe
-│     └─ pythonw.exe
-├─ configs
-│  └─ pipeline.json
-├─ data
-│  ├─ alignments
-│  │  ├─ candidates
-│  │  │  └─ alignments.jsonl
-│  │  └─ filtered
-│  │     └─ alignments.jsonl
-│  ├─ audio
-│  ├─ clips
-│  │  └─ sentences
-│  ├─ dataset
-│  │  ├─ train
-│  │  ├─ train.jsonl
-│  │  ├─ val
-│  │  └─ val.jsonl
-│  ├─ raw_videos
-│  └─ transcripts
-│     ├─ clean_text
-│     └─ whisper_raw
-│        └─ yt_01.json
-├─ docs
-├─ logs
-│  ├─ pipeline
-│  └─ qc
-├─ main.py
-├─ metadata
-│  └─ videos.json
-├─ notebooks
-├─ pyproject.toml
-├─ README.md
-└─ scripts
-   ├─ align
-   ├─ download
-   │  └─ download_videos.py
-   ├─ pipeline.py
-   ├─ process
-   ├─ qc
-   └─ __pycache__
-      └─ pipeline.cpython-311.pyc
 
+## 🗝️ Environment Setting(Install uv)
+### Windows
+ - cmd
+```
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+
+### macOS, Linux
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### pip
+```
+pip install uv
+```
+
+### Install Environment
+```
+uv sync
+```
+
+## 🍔 Install ffmpeg 
+### Windows
+```
+1. Install ffmpeg windows version: https://www.ffmpeg.org/
+2. Environmental variables -> Path of the System variable -> Add installed ffmpeg bin path(e.g. C:\ffmpeg\bin)
+```
+
+### Linux
+```
+sudo apt update
+sudo apt install ffmpeg
+```
+
+### macOS
+```
+brew install ffmpeg
+```
+
+### How to start
+ - Firstly you should write Youtube url to 'data\metadata\videos.json'
+ - Start with the code below
+
+```
+python scripts\download\download_videos.py
+python scripts\pipeline.py
 ```
