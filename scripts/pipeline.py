@@ -277,8 +277,15 @@ def clean_text(text: str) -> str:
     t = re.sub(r"\s+", " ", t).strip()  # Remove at least 2 spaces to " "
     for w in FILLER_WORDS:
         t = re.sub(rf"\b{re.escape(w)}\b", "", t)  # Remove 'w' to ""
-"", t)
-(row["caption"])
+    return t
+
+
+def filter_text(cfg: PipelineConfig, rows: List[dict]) -> List[dict]:
+    # Step 6 (text): remove short, filler-only, or duplicate captions.
+    seen = set()
+    filtered = []
+    for row in rows:
+        cleaned = clean_text(row["caption"])
         if len(cleaned) < cfg.text_min_chars:
             continue
         if cfg.filter_dedupe:
